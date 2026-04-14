@@ -14,6 +14,7 @@ import type { Signature } from '../types/threat.types';
 import { SQLI_SIGNATURES } from './sqli';
 import { XSS_SIGNATURES } from './xss';
 import { PATH_TRAVERSAL_SIGNATURES } from './path-traversal';
+import { COMMAND_INJECTION_SIGNATURES } from './command-injection';
 
 /**
  * The complete set of signatures, flattened into one array.
@@ -26,8 +27,7 @@ export const ALL_SIGNATURES: readonly Signature[] = [
   ...SQLI_SIGNATURES,
   ...XSS_SIGNATURES,
   ...PATH_TRAVERSAL_SIGNATURES,
-  // ...PATH_TRAVERSAL_SIGNATURES, // coming next
-  // ...COMMAND_INJECTION_SIGNATURES, // coming next
+  ...COMMAND_INJECTION_SIGNATURES,
 ].slice().sort((a, b) => b.confidence - a.confidence);
 
 /**
