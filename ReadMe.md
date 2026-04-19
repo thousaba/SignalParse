@@ -55,6 +55,7 @@ Memory usage remains bounded regardless of input file size — a 73 MB file is p
 
 ## Architecture
 
+```
 ┌──────────────┐
        │  Log File     │
        │ (Apache/Nginx)│
@@ -82,6 +83,7 @@ Memory usage remains bounded regardless of input file size — a 73 MB file is p
     ┌──────────────────┐
     │     Output       │  ← NDJSON / stdout / file
     └──────────────────┘
+```
 
 
 **Key design decisions:**
@@ -160,6 +162,7 @@ npx ts-node src/cli/index.ts formats
 
 ## Project Structure
 
+```
 src/
 ├── core/
 │   ├── detector.ts       # Detection engine — runs signatures against entries
@@ -181,7 +184,7 @@ src/
 │   ├── log.types.ts      # LogEntry, ParseResult, HttpMethod
 │   └── threat.types.ts   # Signature, Threat, DetectionResult, Severity
 └── cli/
-└── index.ts          # Commander.js CLI entry point
+    └── index.ts          # Commander.js CLI entry point
 tests/
 ├── core/
 │   ├── detector.test.ts  # 21 tests — field targeting, severity, purity
@@ -195,7 +198,8 @@ tests/
 │   ├── path-traversal.test.ts  # 17 tests — encoded, double-encoded, sensitive files
 │   └── command-injection.test.ts # 16 tests — chaining, substitution, reverse shell
 └── output/
-└── json.test.ts      # 17 tests — schema stability, round-trip, encoding
+    └── json.test.ts      # 17 tests — schema stability, round-trip, encoding
+```
 
 
 ---
