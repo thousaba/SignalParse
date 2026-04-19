@@ -6,6 +6,69 @@ SignalParse is a CLI tool that streams Apache and Nginx access logs, parses them
 
 ---
 
+## Installation
+
+```bash
+git clone https://github.com/<your-username>/signalparse.git
+cd signalparse
+npm install
+npm run build
+```
+
+---
+
+## Usage
+
+```bash
+# Analyze an Apache log
+npx signalparse scan --format apache --file /var/log/apache2/access.log
+
+# Analyze an Nginx log
+npx signalparse scan --format nginx --file /var/log/nginx/access.log
+
+# Only show threats, pretty-printed
+npx signalparse scan --format apache --file access.log --threats-only --pretty
+
+# Only show HIGH and CRITICAL severity
+npx signalparse scan --format apache --file access.log --min-severity HIGH
+
+# Pipe into jq for filtering
+npx signalparse scan --format nginx --file access.log -q | jq 'select(.severity == "CRITICAL")'
+
+# Write threats to a file
+npx signalparse scan --format apache --file access.log --threats-only --output threats.json
+
+# List supported formats
+npx signalparse formats
+```
+
+### Example Output
+
+```json
+{
+  "timestamp": "2024-06-15T08:30:01.000Z",
+  "ip": "203.0.113.5",
+  "method": "GET",
+  "path": "/login",
+  "queryString": "u=admin%27%20OR%20%271%27=%271",
+  "statusCode": 200,
+  "format": "nginx",
+  "severity": "CRITICAL",
+  "threats": [
+    {
+      "signatureId": "sqli-tautology-01",
+      "type": "SQLI",
+      "field": "queryString",
+      "matchedString": "%27%20OR%20%271%27=%271",
+      "confidence": 95,
+      "severity": "CRITICAL",
+      "mitreTechnique": "T1190"
+    }
+  ]
+}
+```
+---
+
 ## Features
 
 - **Streaming parser** — processes arbitrarily large log files with constant memory footprint
@@ -96,69 +159,6 @@ Memory usage remains bounded regardless of input file size — a 73 MB file is p
 
 ---
 
-## Installation
-
-```bash
-git clone https://github.com/<your-username>/signalparse.git
-cd signalparse
-npm install
-npm run build
-```
-
----
-
-## Usage
-
-```bash
-# Analyze an Apache log
-npx signalparse scan --format apache --file /var/log/apache2/access.log
-
-# Analyze an Nginx log
-npx signalparse scan --format nginx --file /var/log/nginx/access.log
-
-# Only show threats, pretty-printed
-npx signalparse scan --format apache --file access.log --threats-only --pretty
-
-# Only show HIGH and CRITICAL severity
-npx signalparse scan --format apache --file access.log --min-severity HIGH
-
-# Pipe into jq for filtering
-npx signalparse scan --format nginx --file access.log -q | jq 'select(.severity == "CRITICAL")'
-
-# Write threats to a file
-npx signalparse scan --format apache --file access.log --threats-only --output threats.json
-
-# List supported formats
-npx signalparse formats
-```
-
-### Example Output
-
-```json
-{
-  "timestamp": "2024-06-15T08:30:01.000Z",
-  "ip": "203.0.113.5",
-  "method": "GET",
-  "path": "/login",
-  "queryString": "u=admin%27%20OR%20%271%27=%271",
-  "statusCode": 200,
-  "format": "nginx",
-  "severity": "CRITICAL",
-  "threats": [
-    {
-      "signatureId": "sqli-tautology-01",
-      "type": "SQLI",
-      "field": "queryString",
-      "matchedString": "%27%20OR%20%271%27=%271",
-      "confidence": 95,
-      "severity": "CRITICAL",
-      "mitreTechnique": "T1190"
-    }
-  ]
-}
-```
-
----
 
 ## Project Structure
 
