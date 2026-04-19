@@ -8,6 +8,9 @@
 import type { LogFormat } from '../types/log.types';
 import type { LogParser } from './types';
 import { apacheParser } from './apache';
+import { nginxParser } from './nginx';
+// import { iisParser } from './iis';  // coming soon
+
 
 /**
  * Registry of all available parsers, keyed by format name.
@@ -18,7 +21,7 @@ import { apacheParser } from './apache';
  */
 const PARSERS: Partial<Record<LogFormat, LogParser>> = {
   apache: apacheParser,
-  // nginx: nginxParser,  // coming soon
+  nginx: nginxParser,  
   // iis: iisParser,      // coming soon
 };
 

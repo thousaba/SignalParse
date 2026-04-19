@@ -8,6 +8,7 @@
 
 import { getParser, getSupportedFormats } from '../../src/parsers';
 import { apacheParser } from '../../src/parsers/apache';
+import { nginxParser } from '../../src/parsers/nginx';
 
 describe('parser registry', () => {
   describe('getParser', () => {
@@ -16,10 +17,14 @@ describe('parser registry', () => {
       expect(parser).toBe(apacheParser);
     });
 
+    it('returns the nginx parser for "nginx"', () => {
+      const parser = getParser('nginx');
+      expect(parser).toBe(nginxParser);
+    });
+
     it('returns undefined for unknown formats', () => {
       // 'iis' is a valid LogFormat type but we haven't registered a parser yet.
       expect(getParser('iis')).toBeUndefined();
-      expect(getParser('nginx')).toBeUndefined();
     });
 
     it('returns undefined for the "unknown" format', () => {
