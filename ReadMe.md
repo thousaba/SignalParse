@@ -111,25 +111,25 @@ npm run build
 
 ```bash
 # Analyze an Apache log
-npx ts-node src/cli/index.ts scan --format apache --file /var/log/apache2/access.log
+npx signalparse scan --format apache --file /var/log/apache2/access.log
 
 # Analyze an Nginx log
-npx ts-node src/cli/index.ts scan --format nginx --file /var/log/nginx/access.log
+npx signalparse scan --format nginx --file /var/log/nginx/access.log
 
 # Only show threats, pretty-printed
-npx ts-node src/cli/index.ts scan --format apache --file access.log --threats-only --pretty
+npx signalparse scan --format apache --file access.log --threats-only --pretty
 
 # Only show HIGH and CRITICAL severity
-npx ts-node src/cli/index.ts scan --format apache --file access.log --min-severity HIGH
+npx signalparse scan --format apache --file access.log --min-severity HIGH
 
 # Pipe into jq for filtering
-npx ts-node src/cli/index.ts scan --format nginx --file access.log -q | jq 'select(.severity == "CRITICAL")'
+npx signalparse scan --format nginx --file access.log -q | jq 'select(.severity == "CRITICAL")'
 
 # Write threats to a file
-npx ts-node src/cli/index.ts scan --format apache --file access.log --threats-only --output threats.json
+npx signalparse scan --format apache --file access.log --threats-only --output threats.json
 
 # List supported formats
-npx ts-node src/cli/index.ts formats
+npx signalparse formats
 ```
 
 ### Example Output

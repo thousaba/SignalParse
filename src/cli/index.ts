@@ -190,15 +190,15 @@ function main(): void {
   program
     .command('scan')
     .description('Scan a log file for security threats.')
-    .requiredOption('-f, --format <format>', 'log format (e.g., apache)')
-    .requiredOption('-i, --file <path>', 'path to log file')
+    .argument('<file>', 'path to log file')
+    .option('-f, --format <format>', 'log format (default: apache)', 'apache')
     .option('-o, --output <path>', 'write JSON output to a file instead of stdout')
     .option('-s, --min-severity <level>', 'minimum severity to report (INFO|LOW|MEDIUM|HIGH|CRITICAL)')
     .option('-t, --threats-only', 'only emit entries that contain at least one threat')
     .option('-p, --pretty', 'pretty-print JSON output (breaks NDJSON compatibility)')
     .option('-q, --quiet', 'suppress banner and summary output')
-    .action((opts: ScanOptions) => {
-      runScan(opts).catch((err) => {
+    .action((file: string, opts: Omit<ScanOptions, 'file'> & { format: string }) => {
+      runScan({ ...opts, file }).catch((err) => {
         const msg = err instanceof Error ? err.message : String(err);
         process.stderr.write(`Fatal: ${msg}\n`);
         process.exit(EXIT_RUNTIME);
