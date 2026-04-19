@@ -9,7 +9,7 @@ SignalParse is a CLI tool that streams Apache and Nginx access logs, parses them
 ## Installation
 
 ```bash
-git clone https://github.com/<your-username>/signalparse.git
+git clone https://github.com/thousaba/signalparse.git
 cd signalparse
 npm install
 npm run build
